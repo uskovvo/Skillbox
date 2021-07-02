@@ -8,10 +8,6 @@ public class Printer {
         queue = "Очередь печати:";
     }
 
-    public static  void sumPages(int pages) {
-        Printer.pages = Printer.pages + pages;
-    }
-
     public void append(String text) {
         append(text, "", 1);
     }
