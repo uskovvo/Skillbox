@@ -28,7 +28,6 @@ public class Elevator {
             for(int a = getCurrentFloor(); a < floor; a++){
                 Thread.sleep(1000);
                 if (a == 0) {
-//                    a++;
                     currentFloor = currentFloor + 1;
                 }
                 if (getCurrentFloor() == floor){
@@ -42,7 +41,6 @@ public class Elevator {
             for(int a = getCurrentFloor(); a > floor; a--){
                 Thread.sleep(1000);
                 if (a == 0) {
-//                    a--;
                     currentFloor = currentFloor -1;
                 }
                 if (getCurrentFloor() == floor){
