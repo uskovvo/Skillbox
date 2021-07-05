@@ -26,7 +26,6 @@ public class Elevator {
         if (floor > getCurrentFloor() && floor <= maxFloor  ) {
             System.out.println("Лифт идет вверх.");
             for(int a = getCurrentFloor(); a < floor; a++){
-                Thread.sleep(1000);
                 if (a == 0) {
                     currentFloor = currentFloor + 1;
                 }
@@ -39,7 +38,6 @@ public class Elevator {
         }else if (floor < getCurrentFloor() && floor >= minFloor){
             System.out.println("Лифт идет вниз.");
             for(int a = getCurrentFloor(); a > floor; a--){
-                Thread.sleep(1000);
                 if (a == 0) {
                     currentFloor = currentFloor -1;
                 }
