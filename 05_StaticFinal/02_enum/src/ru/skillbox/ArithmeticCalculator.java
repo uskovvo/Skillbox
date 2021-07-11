@@ -16,15 +16,15 @@ public class ArithmeticCalculator {
     }
 
     public void calculate(Operation operation) {
-        if (operation.equals(Operation.ADD)) {
+        if (operation == Operation.ADD) {
             result = a + b;
         }
 
-        if (operation.equals(Operation.SUBTRACT)) {
+        if (operation == Operation.SUBTRACT) {
             result = (double) a / b;
         }
 
-        if (operation.equals(Operation.MULTIPLY)) {
+        if (operation == Operation.MULTIPLY) {
             result = a * b;
         }
     }
