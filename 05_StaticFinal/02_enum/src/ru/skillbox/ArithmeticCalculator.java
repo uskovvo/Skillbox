@@ -24,7 +24,8 @@ public class ArithmeticCalculator {
             result = (double) a / b;
         }
 
-        if (operation == Operation.MULTIPLY) {
+        if (operation == Operation.MULTIPLY
+        ) {
             result = a * b;
         }
     }
