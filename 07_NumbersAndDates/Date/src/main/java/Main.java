@@ -18,18 +18,18 @@ public class Main {
     public static String collectBirthdays(int year, int month, int day) {
         LocalDate birthday = LocalDate.of(year, month, day);
         LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy - EEE", Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy - E").
+                localizedBy(new Locale("us"));
         long yearsAgo = birthday.until(today, ChronoUnit.YEARS);
-        String s = "";
 
         if (today.compareTo(birthday) >= 0) {
             for (long a = 0; a <= yearsAgo; a++) {
-                s += a + " - " + formatter.format(birthday.plusYears(a)) + "\n";
+                System.out.println(a + " - " + formatter.format(birthday.plusYears(a)));
             }
         }
         //TODO реализуйте метод для построения строки в следующем виде
         //0 - 31.12.1990 - Mon
         //1 - 31.12.1991 - Tue
-        return s;
+        return "";
     }
 }
