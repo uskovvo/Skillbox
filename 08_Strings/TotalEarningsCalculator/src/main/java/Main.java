@@ -9,9 +9,12 @@ public class Main {
         int sum = 0;
 
         for(int a = 0; a < text.length(); a++) {
-            int start = text.lastIndexOf(" руб");
-            int end = text.lastIndexOf(" ");
-            sum += Integer.parseInt(text.substring(start, end));
+            String charset = " руб";
+            int start = text.lastIndexOf(charset);
+            int end = text.indexOf(" ", start);
+            String encod = text.substring(start, end);
+            System.out.println(encod);
+            sum += Integer.parseInt(encod);
         }
 
         System.out.println(sum);
