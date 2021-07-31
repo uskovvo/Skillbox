@@ -13,8 +13,7 @@ public class Hospital {
     }
 
     public static float getTemperature(float minTemperature, float maxTemperature) {
-        float temperature = (float) ((Math.random() * (maxTemperature - minTemperature)) + minTemperature);
-        return temperature;
+        return (float) ((Math.random() * (maxTemperature - minTemperature)) + minTemperature);
     }
 
     public static String getReport(float[] temperatureData) {
