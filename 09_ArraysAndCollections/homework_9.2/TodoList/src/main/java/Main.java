@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -16,36 +15,21 @@ public class Main {
             String todo = findTodo(request);
             int index = findIndex(request);
             if (command.equals("ADD")) {
-                if(index >= 0 && index < todoList.getTodos().size()) {
+                if (index == -1) {
+                    todoList.add(todo);
+                    System.out.println("Добавлено дело " + todo);
+                }else {
                     todoList.add(index, todo);
-                    System.out.println("Добавлено дело " + todo);
-                } else if(index > todoList.getTodos().size()){
-                    todoList.add(todo);
-                    System.out.println("Добавлено дело " + todo);
-                } else if (index == -1) {
-                    todoList.add(todo);
                     System.out.println("Добавлено дело " + todo);
                 }
             }
 
             if (command.equals("EDIT")) {
-                if (index >= 0 && index < todoList.getTodos().size()) {
-                    String nameIndex = todoList.getTodos().get(index);
-                    todoList.edit(todo, index);
-                    System.out.println("Дело " + "\"" + nameIndex + "\"" + " заменено на " + todo);
-                } else {
-                    System.out.println("Дело с таким номером не существует");
-                }
+                todoList.edit(todo, index);
             }
 
             if (command.equals("DELETE")) {
-                if (index >= 0 && index < todoList.getTodos().size()) {
-                    String nameIndex = todoList.getTodos().get(index);
-                    todoList.delete(index);
-                    System.out.println("Дело " + "\"" + nameIndex + "\"" + " удалено");
-                } else {
-                    System.out.println("Дело с таким номером не существует");
-                }
+                todoList.delete(index);
             }
 
             if (command.equals("LIST")) {
