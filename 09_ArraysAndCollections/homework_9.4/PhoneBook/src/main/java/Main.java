@@ -27,7 +27,6 @@ public class Main {
                 phone = scanner.nextLine();
             }
             phoneBook.addContact(phone, name);
-
         }
     }
 }

@@ -14,9 +14,7 @@ public class PhoneBook {
     public void addContact(String phone, String name) {
         patternName = Pattern.compile(regexName);
         patternNumber = Pattern.compile(regexNumber);
-        if (!validateName(phone) || !validateNumber(name)) {
-            return;
-        } else {
+        if (validateName(name) || validateNumber(phone)) {
             phoneBook.put(phone, name);
         }
         // проверьте корректность формата имени и телефона
@@ -24,16 +22,14 @@ public class PhoneBook {
     }
 
     public String getNameByPhone(String phone) {
-        if (!validateNumber(phone)) {
-            return "";
-        }
-        for (String key : phoneBook.keySet()) {
-            if (phoneBook.containsKey(phone)) {
-                return phoneBook.get(key) + " - " + key;
+        if (validateNumber(phone)) {
+            for (String key : phoneBook.keySet()) {
+                if (phoneBook.containsKey(phone)) {
+                    return phoneBook.get(key) + " - " + key;
+                }
             }
         }
         System.out.println("Такого номера нет в телефонной книге.");
-
         // формат одного контакта "Имя - Телефон"
         // если контакт не найдены - вернуть пустую строку
         return "";
@@ -41,17 +37,14 @@ public class PhoneBook {
 
     public Set<String> getPhonesByName(String name) {
         TreeSet<String> contactsByName = new TreeSet<>();
-        if (!validateName(name)) {
-            return contactsByName;
-        }
-        for (String key : phoneBook.keySet()) {
-            if (phoneBook.get(key).equals(name)) {
-                contactsByName.add(name + " - " + key);
+        if (validateName(name)) {
+            for (String key : phoneBook.keySet()) {
+                if (phoneBook.get(key).equals(name)) {
+                    contactsByName.add(name + " - " + key);
+                }
             }
         }
-        if (contactsByName.isEmpty()) {
-            System.out.println("Такого имени в телефонной книге нет.");
-        }
+        if (contactsByName.isEmpty()) System.out.println("Такого имени в телефонной книге нет.");
         // формат одного контакта "Имя - Телефон"
         // если контакт не найден - вернуть пустой TreeSet
         return contactsByName;
@@ -74,19 +67,19 @@ public class PhoneBook {
 
     public boolean validateName(String name) {
         matcherName = patternName.matcher(name);
-        if (!matcherName.find()) {
-            System.out.println("Неверный формат ввода");
-            return false;
+        if (matcherName.find()) {
+            return matcherName.matches();
         }
-        return matcherName.matches();
+        System.out.println("Неверный формат ввода");
+        return false;
     }
 
     public boolean validateNumber(String phone) {
         matcherNumber = patternNumber.matcher(phone);
-        if (!matcherNumber.find()) {
-            System.out.println("Неверный формат ввода");
-            return false;
+        if (matcherNumber.find()) {
+            return matcherNumber.matches();
         }
-        return matcherNumber.matches();
+        System.out.println("Неверный формат ввода");
+        return false;
     }
 }
