@@ -14,7 +14,7 @@ public class PhoneBook {
     public void addContact(String phone, String name) {
         patternName = Pattern.compile(regexName);
         patternNumber = Pattern.compile(regexNumber);
-        if (validateName(name) || validateNumber(phone)) {
+        if (validateName(name) && validateNumber(phone)) {
             phoneBook.put(phone, name);
         }
         // проверьте корректность формата имени и телефона
@@ -52,8 +52,8 @@ public class PhoneBook {
 
     public Set<String> getAllContacts() {
         TreeSet<String> contacts = new TreeSet<>();
-        String phone = "";
-        String name = "";
+        String phone;
+        String name;
         for (String key : phoneBook.keySet()) {
             name = phoneBook.get(key);
             phone = String.join(", ", getPhonesByName(name));
