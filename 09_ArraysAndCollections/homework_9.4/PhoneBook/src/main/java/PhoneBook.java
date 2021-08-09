@@ -59,6 +59,7 @@ public class PhoneBook {
             phone = String.join(", ", getPhonesByName(name));
             phone = phone.replaceAll(name + " - ", "");
             contacts.add(name + " - " + phone);
+
         }
         // формат одного контакта "Имя - Телефон"
         // если контактов нет в телефонной книге - вернуть пустой TreeSet
