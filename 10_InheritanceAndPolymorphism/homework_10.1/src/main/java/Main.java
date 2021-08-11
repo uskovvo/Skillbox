@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
@@ -5,17 +6,12 @@ public class Main {
         BankAccount bankAccount = new BankAccount();
         BankAccount bankAccount1 = new BankAccount();
         BankAccount cardAccount = new CardAccount();
-        bankAccount.put(100.2);
-        bankAccount.put(554.9);
-        bankAccount.take(1000);
-        bankAccount.take(500);
-        bankAccount.send(cardAccount, 100);
-        bankAccount.getAmount();
-        bankAccount1.getAmount();
-
-        bankAccount.put(455);
-        bankAccount.take(0.1);
-        cardAccount.getAmount();
-        cardAccount.take(10);
+        DepositAccount depositAccount = new DepositAccount();
+        bankAccount.put(500);
+        bankAccount.send(depositAccount, 250);
+        depositAccount.setLastIncome(LocalDate.now().plusMonths(2));
+        depositAccount.take(100);
+        depositAccount.setLastIncome(LocalDate.now().minusMonths(1));
+        depositAccount.take(50);
     }
 }
