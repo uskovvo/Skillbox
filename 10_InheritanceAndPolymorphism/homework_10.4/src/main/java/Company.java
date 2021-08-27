@@ -9,7 +9,6 @@ public class Company {
     private final List<Employee> employees = new ArrayList<>();
 
     public void hire(String position) {
-        getEmployee(position);
         employees.add(getEmployee(position));
     }
 
