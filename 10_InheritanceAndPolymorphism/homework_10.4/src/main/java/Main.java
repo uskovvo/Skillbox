@@ -33,10 +33,11 @@ public class Main {
                     return;
                 }
                 position = str;
+                Employee employee = getEmployee(position);
                 if(count == 1){
-                    company.hire(position);
+                    company.hire(employee);
                 }else if(count > 1){
-                    company.hireAll(count, position);
+                    company.hireAll(count, employee);
                 }
             }
             if(str.equals("уволить")){
@@ -76,5 +77,15 @@ public class Main {
                 }
             }
         }
+    }
+
+    private static Employee getEmployee(String position) {
+        position = position.toLowerCase(Locale.ROOT);
+        return switch (position) {
+            case "менеджер" -> new Manager();
+            case "топ менеджер" -> new TopManager(new Company());
+            case "оператор" -> new Operator();
+            default -> throw new IllegalStateException("Ошибка!!!");
+        };
     }
 }

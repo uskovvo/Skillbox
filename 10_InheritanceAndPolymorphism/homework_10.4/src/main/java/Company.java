@@ -8,13 +8,13 @@ public class Company {
 
     private final List<Employee> employees = new ArrayList<>();
 
-    public void hire(String position) {
-        employees.add(getEmployee(position));
+    public void hire(Employee employee) {
+        employees.add(employee);
     }
 
-    public void hireAll(int count, String position) {
+    public void hireAll(int count, Employee employee) {
         for (int a = 0; a < count; a++) {
-            employees.add(getEmployee(position));
+            employees.add(employee);
         }
     }
 
@@ -48,15 +48,5 @@ public class Company {
         }
         employees.sort(comparator);
         return new ArrayList<>(employees.subList(0, count));
-    }
-
-    private Employee getEmployee(String position) {
-        position = position.toLowerCase(Locale.ROOT);
-        return switch (position) {
-            case "менеджер" -> new Manager();
-            case "топ менеджер" -> new TopManager(this);
-            case "оператор" -> new Operator();
-            default -> throw new IllegalStateException("Ошибка!!!");
-        };
     }
 }
