@@ -18,7 +18,12 @@ public class Main {
             String[] tokens = command.split("\\s+", 2);
 
             if (tokens[0].equals("add")) {
-                executor.addCustomer(tokens[1]);
+                try {
+                    executor.addCustomer(tokens[1]);
+                } catch (WrongFormatException e) {
+                    e.getMessage();
+                    e.getStr();
+                }
             } else if (tokens[0].equals("list")) {
                 executor.listCustomers();
             } else if (tokens[0].equals("remove")) {

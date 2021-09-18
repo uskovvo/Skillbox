@@ -60,7 +60,12 @@ public class ExceptionTests {
         final String phone = "+79991234567";
         final String input = String.join(" ", name, email, phone);
 
-        storage.addCustomer(input);
+        try {
+            storage.addCustomer(input);
+        } catch (WrongFormatException e) {
+            e.getMessage();
+            e.getStr();
+        }
         assertEquals(1, storage.getCount());
 
         Customer customer = storage.getCustomer(name);

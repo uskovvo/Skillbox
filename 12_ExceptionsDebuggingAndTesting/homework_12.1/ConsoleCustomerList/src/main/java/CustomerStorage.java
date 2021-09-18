@@ -11,7 +11,7 @@ public class CustomerStorage {
         storage = new HashMap<>();
     }
 
-    public void addCustomer(String data) {
+    public void addCustomer(String data) throws WrongFormatException {
         final int INDEX_NAME = 0;
         final int INDEX_SURNAME = 1;
         final int INDEX_EMAIL = 2;
@@ -22,10 +22,10 @@ public class CustomerStorage {
             throw new ArrayIndexOutOfBoundsException();
         }
         if(!formatPhoneNumber(components)){
-            throw new IllegalArgumentException("Неверный формат телефона.");
+            throw new WrongFormatException("Неверный формат телефона.", components[3]);
         }
         if(!formatEmail(components)){
-            throw new IllegalArgumentException("Неверный формат электронной почты.");
+            throw new WrongFormatException("Неверный формат электронной почты.", components[2]);
         }
 
         String name = components[INDEX_NAME] + " " + components[INDEX_SURNAME];
