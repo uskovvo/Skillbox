@@ -1,4 +1,4 @@
-public class WrongFormatException extends Exception{
+public class WrongFormatException extends IllegalArgumentException{
     private final String str;
 
     public WrongFormatException(String message, String string) {
