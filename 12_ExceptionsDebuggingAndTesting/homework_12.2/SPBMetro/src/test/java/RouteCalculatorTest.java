@@ -39,18 +39,20 @@ public class RouteCalculatorTest extends TestCase {
         withoutConnection.add(stationIndex.getStation("Академическая"));
         withoutConnection.add(stationIndex.getStation("Политехническая"));
 
-        withOneConnection.add(stationIndex.getStation("Нарвская"));
-        withOneConnection.add(stationIndex.getStation("Балтийская"));
-        withOneConnection.add(stationIndex.getStation("Технологический институт 1"));
-        withOneConnection.add(stationIndex.getStation("Технологический институт 2"));
-        withOneConnection.add(stationIndex.getStation("Фрунзенская"));
+        withOneConnection.add(stationIndex.getStation("Горьковская"));
+        withOneConnection.add(stationIndex.getStation("Невский проспект"));
+        withOneConnection.add(stationIndex.getStation("Гостиный двор"));
+        withOneConnection.add(stationIndex.getStation("Маяковская"));
+        withOneConnection.add(stationIndex.getStation("Площадь Александра Невского"));
+//        withOneConnection.add(stationIndex.getStation("Елизаровская"));
 
-        withTwoConnection.add(stationIndex.getStation("Новочеркасская"));
-        withTwoConnection.add(stationIndex.getStation("Площадь Александра Невского 2"));
-        withTwoConnection.add(stationIndex.getStation("Площадь Александра Невского 1"));
-        withTwoConnection.add(stationIndex.getStation("Маяковская"));
+        withTwoConnection.add(stationIndex.getStation("Елизаровская"));
+        withTwoConnection.add(stationIndex.getStation("Площадь Александра Невского"));
+        withTwoConnection.add(stationIndex.getStation("Площадь Александра Невского"));
+        withTwoConnection.add(stationIndex.getStation("Лиговский проспект"));
+        withTwoConnection.add(stationIndex.getStation("Достоевская"));
+        withTwoConnection.add(stationIndex.getStation("Владимирская"));
         withTwoConnection.add(stationIndex.getStation("Площадь Восстания"));
-        withTwoConnection.add(stationIndex.getStation("Чернышевская"));
 
     }
 
@@ -69,8 +71,8 @@ public class RouteCalculatorTest extends TestCase {
     }
 
     public void testWithOneConnection(){
-        Station station1 = stationIndex.getStation("Нарвская");
-        Station station2 = stationIndex.getStation("Фрунзенская");
+        Station station1 = stationIndex.getStation("Горьковская");
+        Station station2 = stationIndex.getStation("Площадь Александра Невского");
         List<Station> expected = withOneConnection;
         List<Station> actual = calculator.getShortestRoute(station1, station2);
     }
