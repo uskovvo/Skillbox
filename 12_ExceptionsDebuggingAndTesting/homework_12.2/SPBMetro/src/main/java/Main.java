@@ -27,15 +27,19 @@ public class Main {
         System.out.println("Программа расчёта маршрутов метрополитена Санкт-Петербурга\n");
         scanner = new Scanner(System.in);
         for (; ; ) {
-            Station from = takeStation("Введите станцию отправления:");
-            Station to = takeStation("Введите станцию назначения:");
+            try {
+                Station from = takeStation("Введите станцию отправления:");
+                Station to = takeStation("Введите станцию назначения:");
 
-            List<Station> route = calculator.getShortestRoute(from, to);
-            System.out.println("Маршрут:");
-            printRoute(route);
+                List<Station> route = calculator.getShortestRoute(from, to);
+                System.out.println("Маршрут:");
+                printRoute(route);
 
-            System.out.println("Длительность: " +
-                    RouteCalculator.calculateDuration(route) + " минут");
+                System.out.println("Длительность: " +
+                        RouteCalculator.calculateDuration(route) + " минут");
+            }catch (IllegalArgumentException ex){
+                logger.error(ex);
+            }
         }
     }
 
@@ -64,11 +68,15 @@ public class Main {
         for (; ; ) {
             System.out.println(message);
             String line = scanner.nextLine().trim();
+            if(line.isEmpty()){
+                throw new IllegalArgumentException();
+            }
             Station station = stationIndex.getStation(line);
             if (station != null) {
+                logger.info(station);
                 return station;
             }
-            logger.info("Станция не найдена: " + line);
+            logger.warn("Станция не найдена: " + line);
             System.out.println("Станция не найдена :(");
         }
     }
