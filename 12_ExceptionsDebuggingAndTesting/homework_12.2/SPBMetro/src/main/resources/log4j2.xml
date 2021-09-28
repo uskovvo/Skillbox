@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration status="FATAL">
+<configuration status="ERROR">
     <appenders>
-        <File fileName="logs/search.log" name="SearchFile">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+
+        <File filename="logs/search.log" name="SearchFile">
+            <PatternLayout pattern="%msg%n"/>
             <Filters>
-                <ThresholdFilter onMismatch="NEUTRAL" onMatch="DENY" level="warn"/>
+                <MarkerFilter marker="INPUT_HISTORY"/>
             </Filters>
         </File>
-        <File fileName="logs/input_errors.log" name="InputErrors">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+
+        <File filename="logs/input_errors.log" name="InvalidStations">
+            <PatternLayout pattern="%msg%n"/>
             <Filters>
-                <ThresholdFilter onMismatch="NEUTRAL" onMatch="DENY" level="error"/>
+                <MarkerFilter marker="INVALID_STATIONS"/>
             </Filters>
         </File>
-        <File fileName="logs/exceptions.log" name="Exceptions">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+
+        <File filename="logs/exceptions.log" name="Exceptions">
+            <PatternLayout pattern="%msg%n"/>
             <Filters>
-                <ThresholdFilter onMismatch="NEUTRAL" onMatch="DENY" level="fatal"/>
+                <MarkerFilter marker="EXCEPTIONS"/>
             </Filters>
         </File>
+
     </appenders>
+
     <loggers>
-        <root level="info">
-            <appender-ref level="info" ref="SearchFile"/>
-            <appender-ref level="warn" ref="InputErrors"/>
-            <appender-ref level="error" ref="Exceptions"/>
+        <root level="ERROR">
+            <appender-ref ref="INPUT_HISTORY"/>
+            <appender-ref ref="INVALID_STATION"/>
+            <appender-ref ref="EXCEPTIONS"/>
         </root>
     </loggers>
 </configuration>
