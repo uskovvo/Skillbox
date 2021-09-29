@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration status="ERROR">
+<configuration status="INFO">
     <appenders>
 
         <File filename="logs/search.log" name="SearchFile">
-            <PatternLayout pattern="%msg%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <Filters>
                 <MarkerFilter marker="INPUT_HISTORY"/>
             </Filters>
         </File>
 
         <File filename="logs/input_errors.log" name="InvalidStations">
-            <PatternLayout pattern="%msg%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <Filters>
                 <MarkerFilter marker="INVALID_STATIONS"/>
             </Filters>
         </File>
 
         <File filename="logs/exceptions.log" name="Exceptions">
-            <PatternLayout pattern="%msg%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <Filters>
                 <MarkerFilter marker="EXCEPTIONS"/>
             </Filters>
@@ -27,10 +27,10 @@
     </appenders>
 
     <loggers>
-        <root level="ERROR">
-            <appender-ref ref="INPUT_HISTORY"/>
-            <appender-ref ref="INVALID_STATION"/>
-            <appender-ref ref="EXCEPTIONS"/>
+        <root level="info">
+            <appender-ref ref="SearchFile"/>
+            <appender-ref ref="InvalidStations"/>
+            <appender-ref ref="Exceptions"/>
         </root>
     </loggers>
 </configuration>

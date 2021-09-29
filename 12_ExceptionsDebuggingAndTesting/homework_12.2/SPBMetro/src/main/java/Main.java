@@ -42,7 +42,7 @@ public class Main {
                 System.out.println("Длительность: " +
                         RouteCalculator.calculateDuration(route) + " минут");
             }catch (IllegalArgumentException ex){
-                LOGGER.error(EXCEPTIONS, "Произошла ошибка: {}", ex);
+                LOGGER.error(EXCEPTIONS, "Произошла ошибка: ", ex);
             }
         }
     }
@@ -80,7 +80,7 @@ public class Main {
                 LOGGER.info(INPUT_HISTORY_MARKER, "Пользователь выбрал станцию: {}", station);
                 return station;
             }
-            LOGGER.warn(INVALID_STATION, "Пользователь ввёл не верное название станции: {}", station);
+            LOGGER.warn(INVALID_STATION, "Пользователь ввёл не верное название станции: {}", line);
             System.out.println("Станция не найдена :(");
         }
     }
