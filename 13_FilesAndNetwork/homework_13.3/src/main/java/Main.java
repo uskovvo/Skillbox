@@ -4,8 +4,9 @@ public class Main {
 
     public static void main(String[] args) {
         Movements movements = new Movements(movement);
-        System.out.println("Сумма доходов: " + movements.getIncomeSum() + " руб.");
-        System.out.println("Сумма расходов: " + movements.getExpenseSum() + " руб.");
+        System.out.printf("\nОбщая сумма прихода: %,.02f\nОбщая сумма расхода: %,.02f\n",
+                            movements.getIncomeSum(), movements.getExpenseSum());
+        System.out.println("\nСуммы расходов по организациям:");
         movements.expenseByOrg();
     }
 }

@@ -1,3 +1,5 @@
+import net.sf.saxon.style.XSLOutput;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
@@ -7,20 +9,17 @@ import java.util.regex.Pattern;
 
 public class Movements {
     private final String DATE_FORMAT = "dd.MM.yyyy";
-    private final String template = "%s - %.2f";
     private BankAccount bankAccount;
     private Date dateOfOperation;
     private String referenceWiring;
     private String operationDescription;
     private double coming;
     private double expense;
-    private String path;
     private List<Movements> list;
 
 
     public Movements(String pathMovementsCsv) {
-        this.path = pathMovementsCsv;
-        list = loadMovementsFromFile(path);
+        list = loadMovementsFromFile(pathMovementsCsv);
     }
 
     private Movements(BankAccount bankAccount, Date dateOfOperation, String referenceWiring,
@@ -41,51 +40,37 @@ public class Movements {
     }
 
     public void expenseByOrg() {
-        List<String> operations = new ArrayList<>();
-        String[] oper;
-        StringBuilder operation = new StringBuilder();
+        Map<String, Double> operations = new HashMap<>();
         for (Movements m : list) {
             if (m.getExpense() > 0) {
                 String str = m.getOperationDescription();
-//                oper = str.split("\\\\/");
-//                if(str.equals("\\")) {
-//                    int start = str.indexOf("\\");
-//                    int end = str.lastIndexOf("\\");
-//                    int end1 = str.indexOf(" ", end);
-//                    str = str.substring(start, end1);
-//                }else if(str.equals("/")){
-//                    int start = str.indexOf("\\");
-//                    int end = str.lastIndexOf("\\");
-//                    int end1 = str.indexOf(" ", end);
-//                    str = str.substring(start, end1);
-//                }
-                Pattern pattern = Pattern.compile("^(\\w+\\W+\\w+)(\\s+\\w+)");
+                str = str.replaceAll("\\\\", "/");
+                Pattern pattern = Pattern.compile("^.+[/\\\\](\\S+\\s?\\S+\\s?\\S+)\\s{2,}.+$");
                 Matcher matcher = pattern.matcher(str);
-                while (matcher.find()){
-                    int start = matcher.start();
-                    int end = matcher.end();
-                    str = str.substring(start, end);
+                if(matcher.matches()){
+                    str = matcher.group(1);
                 }
-//                oper = str.split("[\\\\][a-zA-Z0-9\\\\/]+");
-//                for(int a = 1; a < oper.length; a++){
-//                    operation.append(oper[a]).append(" ");
-//                }
-//                str = str.replaceAll("[0-9]", " ");
-                String description = str + " - " + m.getExpense() + " руб.";
-                operations.add(description);
+                double value = m.getExpense();
+                if(operations.containsKey(str)){
+                    operations.put(str, operations.get(str) + value);
+                }
+                else {
+                    operations.put(str, value);
+                }
             }
         }
-        operations.stream().forEach(System.out::println);
+        for(Map.Entry entry: operations.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
+        }
     }
 
     private List<Movements> loadMovementsFromFile(String path) {
         List<Movements> movements = new ArrayList<>();
-        String[] fragments;
         try {
             List<String> lines = Files.readAllLines(Path.of(path));
             lines.remove(0);
             for (String line : lines) {
-                fragments = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                String[] fragments = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                 for (int a = 0; a < fragments.length; a++) {
                     if (fragments[a].contains("\"")) {
                         fragments[a] = fragments[a].replaceAll("\"", "");
