@@ -34,8 +34,8 @@ public class Main {
             elements.forEach(element -> {
                 try {
                     String url = element.attr("abs:src");
-                    if(url.contains(".jpg")) {
-                        String fileName = url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf(".jpg"));
+                    if(url.contains(".jpg") || url.contains(".jpeg")) {
+                        String fileName = url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf("."));
                         String suffix = url.substring(url.lastIndexOf('.'));
                         String file = fileName + suffix;
                         linkImg.put(new URL(url), file);
