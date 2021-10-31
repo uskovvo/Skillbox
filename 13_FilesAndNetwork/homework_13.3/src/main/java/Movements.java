@@ -1,5 +1,6 @@
-import net.sf.saxon.style.XSLOutput;
+import org.apache.commons.csv.CSVParser;
 
+import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ public class Movements {
     private double coming;
     private double expense;
     private List<Movements> list;
+    CSVParser csvParser;
 
 
     public Movements(String pathMovementsCsv) {
@@ -65,6 +67,7 @@ public class Movements {
     }
 
     private List<Movements> loadMovementsFromFile(String path) {
+
         List<Movements> movements = new ArrayList<>();
         try {
             List<String> lines = Files.readAllLines(Path.of(path));
