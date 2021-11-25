@@ -47,9 +47,9 @@ public class MapSubway {
                     }
                     JSONObject line = new JSONObject();
                     if(!lineNumber.isEmpty() && !lineName.isEmpty()){
-                        if(!jsonLines.contains(line.get(lineNumber))){
-                            line.put("number", lineNumber);
-                            line.put("name", lineName);
+                        line.put("number", lineNumber);
+                        line.put("name", lineName);
+                        if(!jsonLines.contains(line)){
                             jsonLines.add(line);
                         }
                     }
