@@ -1,30 +1,31 @@
-import java.sql.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+import java.text.SimpleDateFormat;
 
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/skillbox";
-        String user = "root";
-        String pass = "eC9955956682";
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                                                .configure("hibernate.cfg.xml")
+                                                .build();
+        Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
+        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
 
-        try {
-            Connection connection = DriverManager.getConnection(url, user, pass);
+        Session session = sessionFactory.openSession();
+        Course course = session.get(Course.class, 5);
+        System.out.println(course.getName() + " - " + course.getStudentsCount());
 
-            Statement statement = connection.createStatement();
+        Teacher teacher = session.get(Teacher.class, 2);
+        System.out.println(teacher.getName() + " - " + teacher.getAge());
 
-            ResultSet resultSet = statement.executeQuery("SELECT course_name, COUNT(subscription_date)/12 FROM PurchaseList " +
-                                                             "WHERE YEAR(subscription_date) = 2018 GROUP BY course_name");
+        Student student = session.get(Student.class, 5);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.YYYY");
+        System.out.println(student.getName() + " - " + simpleDateFormat.format(student.getRegistrationDate()));
 
-            while(resultSet.next()){
-                String courseName = resultSet.getString("course_name");
-                String countSubscription = resultSet.getString("COUNT(subscription_date)/12");
-                System.out.println(courseName + " - " + countSubscription);
-            }
-
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        sessionFactory.close();
     }
 }
