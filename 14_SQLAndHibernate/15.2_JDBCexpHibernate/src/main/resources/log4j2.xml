@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration status="INFO">
+    <appenders>
+
+        <File filename="logs/info.log" name="Info">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm} [%t] %-5level %logger{36} - %msg%n"/>
+            <Filters>
+                <MarkerFilter marker="INFO"/>
+            </Filters>
+        </File>
+
+        <File filename="logs/errors.log" name="ProgramErrors">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm} [%t] %-5level %logger{36} - %msg%n"/>
+            <Filters>
+                <MarkerFilter marker="PROGRAM_ERRORS"/>
+            </Filters>
+        </File>
+
+        <File filename="logs/exceptions.log" name="Exceptions">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm} [%t] %-5level %logger{36} - %msg%n"/>
+            <Filters>
+                <MarkerFilter marker="EXCEPTIONS"/>
+            </Filters>
+        </File>
+
+    </appenders>
+
+    <loggers>
+        <root level="info">
+            <appender-ref ref="Info"/>
+            <appender-ref ref="ProgramErrors"/>
+            <appender-ref ref="Exceptions"/>
+        </root>
+    </loggers>
+</configuration>
