@@ -12,18 +12,22 @@ import java.util.Objects;
 @Table(name = "purchaselist")
 public class PurchaseList {
 
+    @Getter
+    @Setter
     @EmbeddedId
     private CompositeKey id;
 
     @Getter
     @Setter
-    @JoinColumn(name = "student_name", insertable = false, updatable = false)
-    private String studentName;
+    @JoinColumn(name = "student_name", referencedColumnName = "name", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Student student;
 
     @Getter
     @Setter
-    @Column(name = "course_name")
-    private String courseName;
+    @JoinColumn(name = "course_name", referencedColumnName = "name", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Course course;
 
     @Getter
     @Setter
@@ -31,7 +35,7 @@ public class PurchaseList {
 
     @Getter
     @Setter
-    @JoinColumn(name = "subscription_date", insertable = false, updatable = false)
+    @Column(name = "subscription_date")
     private Date subscriptionDate;
 
     @NoArgsConstructor
@@ -41,25 +45,25 @@ public class PurchaseList {
 
         @Getter
         @Setter
-        @Column(name = "student_id")
+        @Column(name = "student_name")
         private String studentName;
 
         @Getter
         @Setter
-        @Column(name = "subscription_date")
-        private Date subscriptionDate;
+        @Column(name = "course_name")
+        private String courseName;
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             CompositeKey that = (CompositeKey) o;
-            return Objects.equals(studentName, that.studentName) && Objects.equals(subscriptionDate, that.subscriptionDate);
+            return Objects.equals(studentName, that.studentName) && Objects.equals(courseName, that.courseName);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(studentName, subscriptionDate);
+            return Objects.hash(studentName, courseName);
         }
     }
 }
