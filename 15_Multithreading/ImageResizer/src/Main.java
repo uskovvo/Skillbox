@@ -3,49 +3,44 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Main {
+    private static final int coreCount = Runtime.getRuntime().availableProcessors();
+    private static String srcFolder = "D://Valera/SkillBox/images";
+    private static String dstFolder = "data/images";
 
     public static void main(String[] args) {
-        String srcFolder = "/users/sortedmap/Desktop/src";
-        String dstFolder = "/users/sortedmap/Desktop/dst";
-
         File srcDir = new File(srcFolder);
-
-        long start = System.currentTimeMillis();
-
-        File[] files = srcDir.listFiles();
-
-        try {
-            for (File file : files) {
-                BufferedImage image = ImageIO.read(file);
-                if (image == null) {
-                    continue;
-                }
-
-                int newWidth = 300;
-                int newHeight = (int) Math.round(
-                    image.getHeight() / (image.getWidth() / (double) newWidth)
-                );
-                BufferedImage newImage = new BufferedImage(
-                    newWidth, newHeight, BufferedImage.TYPE_INT_RGB
-                );
-
-                int widthStep = image.getWidth() / newWidth;
-                int heightStep = image.getHeight() / newHeight;
-
-                for (int x = 0; x < newWidth; x++) {
-                    for (int y = 0; y < newHeight; y++) {
-                        int rgb = image.getRGB(x * widthStep, y * heightStep);
-                        newImage.setRGB(x, y, rgb);
-                    }
-                }
-
-                File newFile = new File(dstFolder + "/" + file.getName());
-                ImageIO.write(newImage, "jpg", newFile);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        File dstDir = new File(dstFolder);
+        if(!dstDir.exists()){
+            dstDir.mkdirs();
         }
 
-        System.out.println("Duration: " + (System.currentTimeMillis() - start));
+        int countThread = coreCount <= srcDir.length() ? coreCount : (int) srcDir.length();
+
+        File[] files = srcDir.listFiles();
+        File[] fileThread;
+        int arrayLength;
+        int lastArrayLength;
+        int currentSrcPosition;
+
+        if (files.length % 2 == 0) {
+            arrayLength = files.length / countThread;
+            lastArrayLength = arrayLength;
+        } else {
+            arrayLength = (files.length + 1) / countThread;
+            lastArrayLength = arrayLength - 1;
+        }
+        for (int a = 0; a < countThread; a++) {
+            if (a != arrayLength) {
+                fileThread = new File[arrayLength];
+                currentSrcPosition = arrayLength * a;
+                System.arraycopy(files, currentSrcPosition, fileThread, 0, arrayLength);
+                new ImageResizer(300, dstFolder, fileThread).start();
+            } else {
+                fileThread = new File[lastArrayLength];
+                currentSrcPosition = arrayLength * a;
+                System.arraycopy(files, currentSrcPosition, fileThread, 0, lastArrayLength);
+                new ImageResizer(300, dstFolder, fileThread).start();
+            }
+        }
     }
 }
