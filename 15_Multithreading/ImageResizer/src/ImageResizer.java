@@ -10,10 +10,13 @@ public class ImageResizer extends Thread{
     private int newWidth;
     private String destPath;
     private File[] files;
+    private int countThreads;
 
     @Override
     public void run() {
         try {
+            System.out.println("Поток номер: " + countThreads + " начат");
+
             for (File file : files) {
                 BufferedImage image = ImageIO.read(file);
                 if (image == null) {
@@ -26,7 +29,7 @@ public class ImageResizer extends Thread{
                 File newFile = new File(destPath + "/" + file.getName());
                 ImageIO.write(newImage, "jpg", newFile);
             }
-            System.out.println("Запущен поток");
+            System.out.println("Поток номер: " + countThreads + " завершен");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -21,6 +21,7 @@ public class Main {
         int arrayLength;
         int lastArrayLength;
         int currentSrcPosition;
+        int countThreads = 0;
 
         if (files.length % 2 == 0) {
             arrayLength = files.length / countThread;
@@ -30,17 +31,26 @@ public class Main {
             lastArrayLength = arrayLength - 1;
         }
         for (int a = 0; a < countThread; a++) {
+            countThreads++;
             if (a != arrayLength) {
                 fileThread = new File[arrayLength];
                 currentSrcPosition = arrayLength * a;
                 System.arraycopy(files, currentSrcPosition, fileThread, 0, arrayLength);
-                new ImageResizer(300, dstFolder, fileThread).start();
+                new ImageResizer(300, dstFolder, fileThread, countThreads).start();
             } else {
                 fileThread = new File[lastArrayLength];
                 currentSrcPosition = arrayLength * a;
                 System.arraycopy(files, currentSrcPosition, fileThread, 0, lastArrayLength);
-                new ImageResizer(300, dstFolder, fileThread).start();
+                ImageResizer imageResizer = new ImageResizer(300, dstFolder, fileThread, countThreads);
+                try {
+                    imageResizer.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                imageResizer.start();
+
             }
         }
+
     }
 }
