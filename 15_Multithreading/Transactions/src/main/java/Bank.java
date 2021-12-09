@@ -1,10 +1,12 @@
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Bank {
 
     private Map<String, Account> accounts;
     private final Random random = new Random();
+    private Account account;
 
     public synchronized boolean isFraud(String fromAccountNum, String toAccountNum, long amount)
         throws InterruptedException {
@@ -19,17 +21,24 @@ public class Bank {
      * усмотрение)
      */
     public void transfer(String fromAccountNum, String toAccountNum, long amount) {
-
+        Account fromAccount = accounts.get(fromAccountNum);
+        Account toAccount = accounts.get(toAccountNum);
     }
 
     /**
      * TODO: реализовать метод. Возвращает остаток на счёте.
      */
     public long getBalance(String accountNum) {
-        return 0;
+        return accounts.get(accountNum).getMoney();
     }
 
     public long getSumAllAccounts() {
-        return 0;
+        long sum = 0;
+        for(Map.Entry<String, Account> a: accounts.entrySet()){
+            sum += a.getValue().getMoney();
+        }
+        return sum;
     }
 }
+
+
