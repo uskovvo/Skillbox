@@ -1,21 +1,17 @@
+import lombok.Getter;
+import lombok.Setter;
+
 public class Account {
 
+    @Getter
+    @Setter
     private long money;
+
+    @Getter
+    @Setter
     private String accNumber;
 
-    public long getMoney() {
-        return money;
-    }
-
-    public void setMoney(long money) {
-        this.money = money;
-    }
-
-    public String getAccNumber() {
-        return accNumber;
-    }
-
-    public void setAccNumber(String accNumber) {
-        this.accNumber = accNumber;
-    }
+    @Getter
+    @Setter
+    private boolean blockedAcc;
 }

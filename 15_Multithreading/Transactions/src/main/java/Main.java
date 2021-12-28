@@ -20,7 +20,7 @@ public class Main {
         }
 
         for(Map.Entry<String, Account> a: accounts.entrySet()){
-            System.out.println(a.getKey() + " " + a.getValue());
+            System.out.println(a.getKey() + " " + a.getValue().getMoney());
         }
     }
 }
