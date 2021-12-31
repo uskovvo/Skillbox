@@ -31,19 +31,22 @@ public class Bank {
         Account fromAccount = accounts.get(fromAccountNum);
         Account toAccount = accounts.get(toAccountNum);
 
-        if((amount > LIMIT_TRANSFER && amount > 0) &&
-                (!fromAccount.isBlockedAcc() && !toAccount.isBlockedAcc())){
-            isSecurity = isFraud(fromAccount.getAccNumber(), toAccount.getAccNumber(), amount);
-        }
-        if(isSecurity){
-            fromAccount.setBlockedAcc(true);
-            toAccount.setBlockedAcc(true);
-        }
-        else {
-            long profit = toAccount.getMoney() + amount;
-            toAccount.setMoney(profit);
-            profit = fromAccount.getMoney() - amount;
-            fromAccount.setMoney(profit);
+        synchronized (fromAccount) {
+            synchronized (toAccount) {
+                if ((amount > LIMIT_TRANSFER && amount > 0) &&
+                        (!fromAccount.isBlockedAcc() && !toAccount.isBlockedAcc())) {
+                    isSecurity = isFraud(fromAccount.getAccNumber(), toAccount.getAccNumber(), amount);
+                }
+                if (isSecurity) {
+                    fromAccount.setBlockedAcc(true);
+                    toAccount.setBlockedAcc(true);
+                } else {
+                    long profit = toAccount.getMoney() + amount;
+                    toAccount.setMoney(profit);
+                    profit = fromAccount.getMoney() - amount;
+                    fromAccount.setMoney(profit);
+                }
+            }
         }
     }
 
