@@ -33,8 +33,8 @@ public class Main {
 
 //            expHibernate(session);
 //            queryBuilder(session);
-//            hql(session);
-            createNewTable(session);
+            hql(session);
+//            createNewTable(session);
 
             transaction.commit();
             session.close();
