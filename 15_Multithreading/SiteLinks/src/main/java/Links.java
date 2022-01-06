@@ -15,11 +15,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Links extends RecursiveAction {
-
     private final Logger logger = LogManager.getRootLogger();
     private final Marker marker = MarkerManager.getMarker("EXCEPTIONS");
-    private String mainLink;
-    private Set<Links> links = new LinkedHashSet<>();
+    private final String mainLink;
+    private final Set<Links> links = new LinkedHashSet<>();
     private PrintWriter printWriter;
 
     public Links (String mainLink){
@@ -37,10 +36,9 @@ public class Links extends RecursiveAction {
                 Pattern pattern = Pattern.compile(mainLink);
                 Matcher matcher = pattern.matcher(newLink);
                 if(matcher.find() && !links.contains(newLink)){
-                    Links link = new Links(newLink);
-                    link.fork();
-                    links.add(link);
+//                    Links link = new Links(newLink);
                     printWriter.write(newLink + "\n\t");
+                    links.add(new Links(newLink));
 
                     try {
                         Thread.sleep(125);
@@ -50,7 +48,7 @@ public class Links extends RecursiveAction {
                     }
                 }
             });
-            links.forEach(Links::join);
+//            links.forEach(Links::join);
         }
         catch (Exception e){
             logger.error(marker, "Error: ", e);
@@ -59,5 +57,6 @@ public class Links extends RecursiveAction {
 
         printWriter.flush();
         printWriter.close();
+        ForkJoinTask.invokeAll(links);
     }
 }
