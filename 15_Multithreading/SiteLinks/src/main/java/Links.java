@@ -17,12 +17,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Links extends RecursiveAction {
-    private final Logger logger = LogManager.getRootLogger();
-    private final Marker marker = MarkerManager.getMarker("EXCEPTIONS");
+//    private final Logger logger = LogManager.getRootLogger();
+//    private final Marker marker = MarkerManager.getMarker("EXCEPTIONS");
     private final String mainLink;
     private final Set<Links> links = new LinkedHashSet<>();
     private PrintWriter printWriter;
-    private String exceptionLink;
+//    private String exceptionLink;
 
     public Links(String mainLink) {
         this.mainLink = mainLink;
@@ -33,13 +33,15 @@ public class Links extends RecursiveAction {
         try {
             printWriter = new PrintWriter("links.txt");
         } catch (FileNotFoundException e) {
-            logger.fatal(marker, "Fatal read file", e);
+            e.printStackTrace();
+//            logger.fatal(marker, "Fatal read file", e);
         }
         Document document = null;
         try {
             document = Jsoup.connect(mainLink).ignoreContentType(true).get();
         } catch (IOException e) {
-            logger.fatal(marker, "Fatal read main link: ", e);
+            e.printStackTrace();
+//            logger.fatal(marker, "Fatal read main link: ", e);
         }
 
         assert document != null;
@@ -56,8 +58,9 @@ public class Links extends RecursiveAction {
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
-                    logger.error(marker, "Error sleep: ", e);
-                    logger.fatal(marker, "Fatal sleep: ", e);
+                    e.printStackTrace();
+//                    logger.error(marker, "Error sleep: ", e);
+//                    logger.fatal(marker, "Fatal sleep: ", e);
                 }
 
             }
