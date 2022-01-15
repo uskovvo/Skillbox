@@ -1,3 +1,4 @@
+
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 //import org.apache.logging.log4j.Marker;
@@ -6,11 +7,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
+//import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveAction;
 import java.util.regex.Matcher;
@@ -21,54 +25,68 @@ public class Links extends RecursiveAction {
 //    private final Marker marker = MarkerManager.getMarker("EXCEPTIONS");
     private final String mainLink;
     private final Set<Links> links = new LinkedHashSet<>();
-    private PrintWriter printWriter;
-//    private String exceptionLink;
+    private final TreeSet<String> pages = new TreeSet<>();
 
     public Links(String mainLink) {
         this.mainLink = mainLink;
+        pages.add("");
     }
 
     @Override
     protected void compute() {
-        try {
-            printWriter = new PrintWriter("links.txt");
-        } catch (FileNotFoundException e) {
+
+        try{
+            pages.forEach(page -> {
+                if(!mainLink.equals(page)){
+                    pages.add(mainLink);
+
+                    try {
+                        Thread.sleep(150);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Document document = Jsoup.connect(mainLink).maxBodySize(0).get();
+                        Elements elements = document.select("a");
+                        elements.forEach(element -> {
+                            String url = element.absUrl("href");
+                            Pattern pattern = Pattern.compile(mainLink);
+                            Matcher matcher = pattern.matcher(url);
+                            if(matcher.find() && !links.contains(url)){
+                                if(!url.contains(".pdf") && !url.contains(".jpg")
+                                        && !url.contains(".png") && !url.contains("=")) {
+                                    Links link = new Links(url);
+                                    link.fork();
+                                    links.add(link);
+                                }
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            links.forEach(Links::join);
+        } catch (Exception e) {
             e.printStackTrace();
-//            logger.fatal(marker, "Fatal read file", e);
         }
-        Document document = null;
+//        ForkJoinTask.invokeAll(links);
+    }
+
+    public void writeSiteMap (){
         try {
-            document = Jsoup.connect(mainLink).ignoreContentType(true).get();
+            FileWriter fileWriter = new FileWriter("data/links.txt");
+            pages.forEach(page -> {
+                try {
+                    fileWriter.write(page + "\t" + "\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            fileWriter.flush();
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-//            logger.fatal(marker, "Fatal read main link: ", e);
         }
-
-        assert document != null;
-        Elements elements = document.select("a");
-        elements.forEach(element -> {
-            String newLink = element.absUrl("href");
-            Pattern pattern = Pattern.compile(mainLink);
-            Matcher matcher = pattern.matcher(newLink);
-            if (matcher.find() && !links.contains(newLink)) {
-//                    Links link = new Links(newLink);
-                printWriter.write(newLink + "\n\t");
-                links.add(new Links(newLink));
-
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-//                    logger.error(marker, "Error sleep: ", e);
-//                    logger.fatal(marker, "Fatal sleep: ", e);
-                }
-
-            }
-        });
-//            links.forEach(Links::join);
-
-        printWriter.flush();
-        printWriter.close();
-        ForkJoinTask.invokeAll(links);
     }
 }
