@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My ToDos</title>
+</head>
+<body>
+<h1>Список дел (<span th:text="${installsCount}">0</span>)</h1>
+<br><br>
+<div id="install-list">
+    <div th:each="install : ${installs}">
+        <a href="#" class="install-link" th:attr="data-id=${install.id}" th:text="${install.getCity()}"></a>
+        <a href="#" class="install-link" th:attr="data-id=${install.id}" th:text="${install.getStreet()}"></a>
+        <a href="#" class="install-link" th:attr="data-id=${install.id}" th:text="${install.getHouse()} "></a>
+        <a href="#" class="install-link" th:attr="data-id=${install.id}" th:text="${install.getSalary()}"></a>
+    </div>
+</div>
+</body>
+</html>
