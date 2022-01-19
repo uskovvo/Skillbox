@@ -1,7 +1,6 @@
 package main;
 
-import response.Cleaning;
-import response.Purchase;
+import main.model.Installation;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -9,41 +8,41 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Storage {
 
     private static AtomicInteger currentId = new AtomicInteger(1);
-    private static Hashtable<Integer, Purchase> purchases = new Hashtable<>();
+    private static Hashtable<Integer, Installation> installations = new Hashtable<>();
 
-    public static int addPurchase(Purchase purchase){
+    public static int addInstallation(Installation installation){
         int id = currentId.getAndIncrement();
-        purchase.setId(id);
-        purchases.put(id, purchase);
+        installation.setId(id);
+        installations.put(id, installation);
         return id;
     }
 
-    public static List<Purchase> getAllPurchase(){
-        return new ArrayList<>(purchases.values());
+    public static List<Installation> getAllInstallations(){
+        return new ArrayList<>(installations.values());
     }
 
-    public static Purchase getPurchase(int purchaseId){
-        if(purchases.containsKey(purchaseId)){
-            return purchases.get(purchaseId);
+    public static Installation getInstallation(int installationId){
+        if(installations.containsKey(installationId)){
+            return installations.get(installationId);
         }
         return null;
     }
 
-    public static void deletePurchase(int purchaseId){
-        purchases.remove(purchaseId);
+    public static void delInstallationById(int installationId){
+        installations.remove(installationId);
     }
 
-    public static Purchase updatePurchase(int id, Purchase newPurchase){
-        if(purchases.containsKey(id)){
-            purchases.put(id, newPurchase);
-            return purchases.get(id);
+    public static Installation updateInstallationById(int installationId, Installation newInstallation){
+        if(installations.containsKey(installationId)){
+            installations.put(installationId, newInstallation);
+            return installations.get(installationId);
         }
         return null;
     }
 
-    public static Hashtable<Integer, Purchase> clearPurchaseToDos(){
-        purchases.clear();
+    public static Hashtable<Integer, Installation> clearInstallationsList(){
+        installations.clear();
         currentId.set(1);
-        return purchases;
+        return installations;
     }
 }
