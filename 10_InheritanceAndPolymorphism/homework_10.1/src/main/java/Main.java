@@ -9,7 +9,7 @@ public class Main {
         bankAccount.send(depositAccount, 250);
         depositAccount.setLastIncome(LocalDate.now().plusMonths(2));
         depositAccount.take(100);
-        depositAccount.setLastIncome(LocalDate.now().minusMonths(1));
+        depositAccount.setLastIncome(LocalDate.now().plusMonths(1));
         depositAccount.take(50);
     }
 }
