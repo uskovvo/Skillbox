@@ -20,10 +20,16 @@ public class DepositAccount extends BankAccount {
     @Override
     public boolean take(double amountToTake) {
         lastIncome = getLastIncome();
-        if(lastIncome.isAfter(LocalDate.now().plusMonths(1))){
+        LocalDate minusMonths = lastIncome.minusMonths(1);
+        LocalDate minusYear = lastIncome.minusYears(1);
+        if(lastIncome.isAfter(minusMonths)){
             return super.take(amountToTake);
         }
-        System.out.println("Снятие не возможно, прошло меньше месяца после пополнения.");
-        return false;
+        else if(lastIncome.isAfter(minusYear)) {
+            return super.take(amountToTake);
+        }else {
+            System.out.println("Снятие не возможно, прошло меньше месяца после пополнения.");
+            return false;
+        }
     }
 }
