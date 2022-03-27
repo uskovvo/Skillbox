@@ -1,4 +1,4 @@
-package main.otherEntities;
+package main.model.otherEntities;
 
 import lombok.*;
 import org.springframework.lang.NonNull;

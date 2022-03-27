@@ -4,3 +4,10 @@ spring.datasource.username: postgres
 spring.datasource.password: 163425
 spring.jpa.generate-ddl: true
 spring.jpa.hibernate.ddl-auto: create
+
+blog.title: DevPub
+blog.subtitle: Мой блоговый движок
+blog.phone: +7-995-595-66-82
+blog.email: uskovvospb@gmail.com
+blog.copyright: Усков Валерий
+blog.copyrightFrom: 2022

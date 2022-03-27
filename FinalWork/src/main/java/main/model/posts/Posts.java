@@ -1,7 +1,8 @@
-package main.posts;
+package main.model.posts;
 
 import lombok.*;
-import main.users.Users;
+import main.model.otherEntities.Tags;
+import main.model.users.Users;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -44,4 +45,8 @@ public class Posts {
 
     @NonNull @Column(nullable = false)
     private int viewCount;
+
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "tag_id")
+    private Tags tag;
 }

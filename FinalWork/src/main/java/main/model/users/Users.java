@@ -1,4 +1,4 @@
-package main.users;
+package main.model.users;
 
 import lombok.*;
 import org.springframework.lang.NonNull;
