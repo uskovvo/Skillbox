@@ -1,18 +1,14 @@
 package main.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.type.YesNoType;
+import lombok.Data;
 
+@Data
 public class SettingResponse {
     @JsonProperty("MULTIUSER_MODE")
-    @Getter @Setter
-    private YesNoType multiuserMode;
+    private boolean multiuserMode;
     @JsonProperty("POST_PREMODERATION")
-    @Getter @Setter
-    private YesNoType postPremoderation;
+    private boolean postPremoderation;
     @JsonProperty("STATISTICS_IS_PUBLIC")
-    @Getter @Setter
-    private YesNoType statisticsIsPublic;
+    private boolean statisticsIsPublic;
 }

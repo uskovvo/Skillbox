@@ -1,7 +1,6 @@
 package main.model.otherEntities;
 
 import lombok.*;
-import org.hibernate.type.YesNoType;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -22,5 +21,5 @@ public class GlobalSettings {
     private String name;
 
     @NonNull @Column(nullable = false)
-    private YesNoType value;
+    private String value;
 }

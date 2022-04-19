@@ -1,9 +1,9 @@
 package main.repository;
 
-import main.service.SettingsService;
+import main.model.otherEntities.GlobalSettings;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SettingsRepository extends CrudRepository<SettingsService, Integer> {
+public interface SettingsRepository extends CrudRepository<GlobalSettings, Integer> {
 }

@@ -1,5 +1,6 @@
 package main.model.posts;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import main.model.otherEntities.Tags;
 import main.model.users.Users;
@@ -21,7 +22,7 @@ public class Posts {
 
     @NonNull @Column(nullable = false,
             length = 1, columnDefinition = "smallint")
-    private byte isActive;
+    private int isActive;
 
     @Enumerated(EnumType.STRING)
     @Column (nullable = false)
@@ -35,6 +36,7 @@ public class Posts {
     private Users userId;
 
     @NonNull @Column(nullable = false)
+    @JsonProperty("timestamp")
     private Date time;
 
     @NonNull @Column(nullable = false)

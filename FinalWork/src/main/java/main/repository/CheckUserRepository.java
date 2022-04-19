@@ -1,9 +1,9 @@
 package main.repository;
 
-import main.otherEntities.Tag2Post;
+import main.model.users.Users;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Tag2PostRepository extends CrudRepository<Tag2Post, Integer> {
+public interface CheckUserRepository extends CrudRepository<Users, Integer> {
 }

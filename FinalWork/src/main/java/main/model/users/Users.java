@@ -1,5 +1,6 @@
 package main.model.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
@@ -17,8 +18,10 @@ public class Users {
 
     @NonNull @Column(nullable = false,
             length = 1, columnDefinition = "smallint")
-    private byte isModerator;
+    @JsonIgnore
+    private int isModerator;
 
+    @JsonIgnore
     @NonNull @Column(nullable = false)
     private Date regTime;
 
@@ -28,11 +31,19 @@ public class Users {
     @NonNull @Column(nullable = false)
     private String email;
 
+    @JsonIgnore
     @NonNull @Column(nullable = false)
     private String password;
 
+    @JsonIgnore
     private String code;
 
     @Column(columnDefinition = "TEXT")
     private String photo;
+
+    @Transient
+    private boolean moderation;
+
+    @Transient
+    private long moderationCount;
 }
