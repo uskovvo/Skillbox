@@ -4,7 +4,7 @@ import main.repository.PostsRepository;
 import main.repository.TagsRepository;
 
 public class TagsService {
-    private String query;
+    private String name;
     private String weight;
     private final PostsRepository postsRepository;
     private final TagsRepository tagsRepository;
