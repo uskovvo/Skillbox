@@ -19,16 +19,13 @@ public class ApiGeneralController {
     private final InitResponse initResponse;
     private final SettingsService settingsService;
     private final CheckUserService checkUserService;
-    private final PostsService postsService;
 
     public ApiGeneralController(InitResponse initResponse,
                                 SettingsService settingsService,
-                                CheckUserService checkUserService,
-                                PostsService postsService) {
+                                CheckUserService checkUserService) {
         this.initResponse = initResponse;
         this.settingsService = settingsService;
         this.checkUserService = checkUserService;
-        this.postsService = postsService;
     }
 
     @GetMapping("/init")
@@ -54,12 +51,5 @@ public class ApiGeneralController {
         return ResponseEntity.ok(checkUserResponse);
     }
 
-    @GetMapping("/post")
-    public ResponseEntity<PostsResponse> postsResponse(){
-        PostsResponse postsResponse = postsService.checkPosts();
-        if(postsResponse == null){
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        return ResponseEntity.ok(postsResponse);
-    }
+
 }

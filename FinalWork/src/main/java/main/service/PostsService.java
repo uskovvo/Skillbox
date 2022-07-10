@@ -7,7 +7,9 @@ import main.repository.PostsRepository;
 import main.repository.UsersRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,17 +28,17 @@ public class PostsService {
         if(postsRepository.count() == 0){
             getAllPosts();
         }
-        postsResponse = new PostsResponse();
-        postsResponse.setCount(0);
-        postsResponse.setPosts(new ArrayList<>());
         return postsResponse;
     }
 
     private void getAllPosts(){
+        Date dateNow = new Date();
         postsResponse = new PostsResponse();
         Iterable<Posts> posts = postsRepository.findAll();
         posts.forEach(post -> {
-            if(post.getModerationStatus() == ModerationStatus.ACCEPTED) {
+            int datePostResult = post.getTime().compareTo(dateNow);
+            if(post.getModerationStatus() == ModerationStatus.ACCEPTED &&
+                    post.getIsActive() == 1 && datePostResult <= 0) {
                 postsList.add(post);
             }
         });
